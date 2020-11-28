@@ -14,7 +14,7 @@ const SIGN_UP_MUTATION = gql`
 
 const LOGIN_MUTATION = gql`
     mutation loginMutation($email: String!, $password: String!) {
-        signup(email: $email, password: $password) {
+        login(email: $email, password: $password) {
             token
         }
     }
@@ -73,11 +73,11 @@ function Login() {
         <div className="flex mt3">
             <Mutation
                 mutation = {login? LOGIN_MUTATION : SIGN_UP_MUTATION}
-                variables = {{email, password, name}}
+                variables = {login? {email, password}: {email, password, name}}
                 onCompleted = { data => _confirm(data)}
             >
                 {(mutation) => (
-                    <div className="pointer mr2 button" onClick={() => mutation}>
+                    <div className="pointer mr2 button" onClick={mutation}>
                     {login ? 'login' : 'create account'}
                 </div>
                 )}
